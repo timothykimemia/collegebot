@@ -10,7 +10,8 @@ class AddQuestionController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function addQuestionFrame(){
+    public function addQuestionFrame()
+    {
         return view('admin.addQuestion');
     }
 
@@ -18,16 +19,17 @@ class AddQuestionController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function addQuestion(request $request){
-           $add=new addQuestion;
-           $add->question=$request->question;
-           $add->query1=$request->query1;
-           $add->query2=$request->query2;
-           $add->query3=$request->query3;
-           $add->query4=$request->query4;
-           $add->answer=$request->answer;
-           if($request->link==NULL){
-             $add->link='null';
+    public function addQuestion(request $request)
+    {
+           $add = new addQuestion;
+           $add->question = $request->question;
+           $add->query1 = $request->query1;
+           $add->query2 = $request->query2;
+           $add->query3 = $request->query3;
+           $add->query4 = $request->query4;
+           $add->answer = $request->answer;
+           if($request->link === NULL){
+             $add->link = 'null';
            }else{
              $add->link=$request->link;
            }

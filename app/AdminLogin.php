@@ -3,8 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class AdminLogin extends Model
+class AdminLogin extends Authenticatable
 {
     /**
      * The attributes that are mass assignable.
@@ -12,7 +13,7 @@ class AdminLogin extends Model
      * @var array
      */
     protected $fillable = [
-        'username', 'password',
+        'username', 'email', 'password',
     ];
 
     /**

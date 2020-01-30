@@ -16,7 +16,10 @@ class CreateAdminLoginsTable extends Migration
         Schema::create('admin_logins', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('username');
+            $table->string('email')->unique()->nullable();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
     }

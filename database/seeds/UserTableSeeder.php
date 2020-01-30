@@ -3,9 +3,9 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
-use App\AdminLogin;
+use App\User;
 
-class AdminTableSeeder extends Seeder
+class UserTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,21 +14,39 @@ class AdminTableSeeder extends Seeder
      */
     public function run()
     {
-        AdminLogin::create([
+        User::create([
             'username' => 'admin',
             'email' => 'admin@master.com',
             'password' => Hash::make('123456789'),
         ]);
 
-        AdminLogin::create([
+        User::create([
             'username' => 'admin.secret',
             'email' => 'secret@master.com',
             'password' => Hash::make('secret'),
         ]);
 
-        AdminLogin::create([
+        User::create([
             'username' => 'admin.password',
             'email' => 'password@master.com',
+            'password' => Hash::make('password'),
+        ]);
+
+        User::create([
+            'username' => 'user',
+            'email' => 'user@master.com',
+            'password' => Hash::make('password'),
+        ]);
+
+        User::create([
+            'username' => 'mister.cool',
+            'email' => 'mister@master.com',
+            'password' => Hash::make('password'),
+        ]);
+
+        User::create([
+            'username' => 'miss.excellent',
+            'email' => 'missus@master.com',
             'password' => Hash::make('password'),
         ]);
     }

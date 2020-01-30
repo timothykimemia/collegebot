@@ -18,10 +18,15 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-    public function userLogin(){
+    use AuthenticatesUsers;
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function userLogin()
+    {
         return view('welcome');
     }
-    use AuthenticatesUsers;
 
     /**
      * Where to redirect users after login.

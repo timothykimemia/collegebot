@@ -13,7 +13,8 @@ class InvalidQuestionController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function invalidQuestionView(request $request){
+    public function invalidQuestionView(request $request)
+    {
         $result=$request->all();
         return view('user.invalidQuestion',['result'=>$result]);
     }
@@ -22,8 +23,9 @@ class InvalidQuestionController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function addInvalidQuestionView(request $request){
-        if($request->id==0){
+    public function addInvalidQuestionView(request $request)
+    {
+        if($request->id === 0){
            return view('user.success')->with('msg','This question is not addable for invalid answer.');
         }else{
            $result=$request->all();

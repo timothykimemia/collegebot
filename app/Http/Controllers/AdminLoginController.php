@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\AdminLogin;
-use App\viewQuestion;
+use App\ViewQuestion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminLoginController extends Controller
 {
@@ -18,25 +19,23 @@ class AdminLoginController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
      */
-    public function login(request $request)
+    public function login(Request $request)
     {
-        $request->validate([
+        /*$request->validate([
              'username'=>'required|min:8|max:16',
              'password'=>'required|min:8|max:64',
-        ]);
+        ]);*/
 
-        $count=AdminLogin::where('username', $request->username)->where('password', $request->password)->count();
+//        dd(Auth::attempt(['username'=>$request['username'],'password'=>$request['password']]));
 
-        if($count === 1){
-           $request->session()->put('username', $request->username);
-           $request->session()->put('password', $request->password);
-           $r=$request->session()->get('username', $request->username);
-           $r1=$request->session()->get('password', $request->password);
-           $result=viewQuestion::orderBy('id', 'DESC')->get();
-           return view('admin.viewQuestion',['result'=>$result]);
+        if(! Auth::attempt(['username'=>$request['username'],'password'=>$request['password']])){
+            return redirect()->back()->with([ 'fail' => 'Could Not Log You In' ]);
         }
+
+        $result = viewQuestion::orderBy('id', 'DESC')->get();
+        return view('admin.viewQuestion', ['result' => $result]);
     }
 
     /**
@@ -47,6 +46,7 @@ class AdminLoginController extends Controller
     {
         $request->session()->flush('password');
         $request->session()->flush('username');
+
         return view('admin.login');
     }
 

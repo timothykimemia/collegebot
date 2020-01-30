@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class ViewQuestionController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function answer(request $request)
     {
         $result=AddQuestion::where('question','=',$request->question)
@@ -48,12 +52,19 @@ class ViewQuestionController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function viewQuestion(request $request)
     {
         $result=viewQuestion::orderBy('id', 'DESC')->get();
         return view('admin.viewQuestion',['result'=>$result]);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function userBack()
     {
         return view('home');
