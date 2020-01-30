@@ -44,8 +44,10 @@ class AdminLoginController extends Controller
      */
     public function logout(request $request)
     {
-        $request->session()->flush('password');
-        $request->session()->flush('username');
+//        $request->session()->flush('password');
+//        $request->session()->flush('username');
+
+        Auth::logout();
 
         return view('admin.login');
     }
