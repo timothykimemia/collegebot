@@ -16,19 +16,16 @@ class AdminTableSeeder extends Seeder
     {
         AdminLogin::create([
             'username' => 'admin',
-            'email' => 'admin@master.com',
             'password' => Hash::make('123456789'),
         ]);
 
         AdminLogin::create([
             'username' => 'admin.secret',
-            'email' => 'secret@master.com',
             'password' => Hash::make('secret'),
         ]);
 
         AdminLogin::create([
             'username' => 'admin.password',
-            'email' => 'password@master.com',
             'password' => Hash::make('password'),
         ]);
     }
