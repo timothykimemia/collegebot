@@ -9,10 +9,19 @@ use Illuminate\Http\Request;
 
 class InvalidQuestionController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function invalidQuestionView(request $request){
         $result=$request->all();
         return view('user.invalidQuestion',['result'=>$result]);
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function addInvalidQuestionView(request $request){
         if($request->id==0){
            return view('user.success')->with('msg','This question is not addable for invalid answer.');
@@ -27,30 +36,53 @@ class InvalidQuestionController extends Controller
          return view('user.success')->with('msg','You are successfully added question for invalid answer.');
         }
     }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function viewAllInvalidQuestion(){
          $result=InvalidQuestion::all();
          return view('admin.viewInvalidQuestion',['result'=>$result]);
     }
-    public function addQuestion(request $request){
-        $result=InvalidQuestion::find($id);
-      return view('admin.addUpdateQuestion',['result'=>$result]);
-  }
-      public function addUpdateQuestion(request $request){
 
+    /**
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function addQuestion(Request $request, $id){
+        $result=InvalidQuestion::find($id);
+        return view('admin.addUpdateQuestion',['result'=>$result]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function addUpdateQuestion(request $request)
+    {
         if($request->link==NULL){
-             $l='null';
-           }else{
-             $l=$request->link;
-           }
+            $l='null';
+        }else{
+            $l=$request->link;
+        }
+
         AddQuestion::where('id',$request['id'])
-        ->update(['question'=>$request['question'], 'query1'=>$request['query1'],'query2'=>$request['query2'],'query3'=>$request['query3'],'query4'=>$request['query4'],'answer'=>$request['answer'],'link'=>$l]);
-           DB::table('invalid_questions')->where('id', $request->id)->delete();
-           return view('admin.success')->with('msg','You added this successfully.');
-      }
+            ->update(['question'=>$request['question'], 'query1'=>$request['query1'],'query2'=>$request['query2'],'query3'=>$request['query3'],'query4'=>$request['query4'],'answer'=>$request['answer'],'link'=>$l]);
+        DB::table('invalid_questions')->where('id', $request->id)->delete();
+
+        return view('admin.success')->with('msg','You added this successfully.');
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function deleteQuestion(request $request){
         DB::table('invalid_questions')->where('id', $request->id)->delete();
         return view('admin.success')->with('msg','Deleted successfully.');
     }
+
     /**
      * Display a listing of the resource.
      *

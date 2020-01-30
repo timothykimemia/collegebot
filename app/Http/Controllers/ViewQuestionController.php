@@ -8,51 +8,54 @@ use Illuminate\Http\Request;
 
 class ViewQuestionController extends Controller
 {
-    public function answer(request $request){
+    public function answer(request $request)
+    {
+        $result=AddQuestion::where('question','=',$request->question)
+            ->orWhere('query1','=',$request->question)
+            ->orWhere('query2','=',$request->question)
+            ->orWhere('query3','=',$request->question)
+            ->orWhere('query4','=',$request->question)
+            ->get();
+        $result1=AddQuestion::where('question','=',$request->question)
+            ->orWhere('query1','=',$request->question)
+            ->orWhere('query2','=',$request->question)
+            ->orWhere('query3','=',$request->question)
+            ->orWhere('query4','=',$request->question)
+            ->count();
+        if($result1 === 0){
+            $add=new ViewQuestion;
+            $add->question=$request->question;
+            $add->date=date("Y-m-d");
+            $add->time=date('H:i:s', time());
+            $add->save();
 
-         $result=AddQuestion::where('question','=',$request->question)
-             ->orWhere('query1','=',$request->question)
-             ->orWhere('query2','=',$request->question)
-             ->orWhere('query3','=',$request->question)
-             ->orWhere('query4','=',$request->question)
-             ->get();
-             $result1=AddQuestion::where('question','=',$request->question)
-             ->orWhere('query1','=',$request->question)
-             ->orWhere('query2','=',$request->question)
-             ->orWhere('query3','=',$request->question)
-             ->orWhere('query4','=',$request->question)
-             ->count();
-             if($result1==0){
-                $add=new ViewQuestion;
-         $add->question=$request->question;
-         $add->date=date("Y-m-d");
-         $add->time=date('H:i:s', time());
-         $add->save();
-           
-         return view('user.viewAns',['l'=>'null', 'a'=>'Not found!', 'var3'=>$request->question, 'id'=>'0']);
-             }else{
-                $var=$result;
-         foreach ($var as $var1) {
-             $var2=$var1->question;
-             $l=$var1->link;
-             $a=$var1->answer;
-             $id=$var1->id;
-         }
-         $add=new ViewQuestion;
-         $add->question=$var2;
-         $add->date=date("Y-m-d");
-         $add->time=date('H:i:s', time());
-         $add->save();
+            return view('user.viewAns',['l'=>'null', 'a'=>'Not found!', 'var3'=>$request->question, 'id'=>'0']);
+        }else{
+            $var=$result;
+            foreach ($var as $var1) {
+                $var2=$var1->question;
+                $l=$var1->link;
+                $a=$var1->answer;
+                $id=$var1->id;
+            }
+            $add=new ViewQuestion;
+            $add->question=$var2;
+            $add->date=date("Y-m-d");
+            $add->time=date('H:i:s', time());
+            $add->save();
 
-         return view('user.viewAns',['l'=>$l, 'a'=>$a, 'var3'=>$var2, 'id'=>$id]);
-             }
-         
+            return view('user.viewAns',['l'=>$l, 'a'=>$a, 'var3'=>$var2, 'id'=>$id]);
+        }
     }
-    public function viewQuestion(request $request){
+
+    public function viewQuestion(request $request)
+    {
         $result=viewQuestion::orderBy('id', 'DESC')->get();
         return view('admin.viewQuestion',['result'=>$result]);
     }
-    public function userBack(){
+
+    public function userBack()
+    {
         return view('home');
     }
     /**

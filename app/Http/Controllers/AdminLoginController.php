@@ -8,16 +8,28 @@ use Illuminate\Http\Request;
 
 class AdminLoginController extends Controller
 {
-    public function loginFrame(){
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function loginFrame()
+    {
         return view('admin/login');
     }
-    public function login(request $request){
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function login(request $request)
+    {
         $request->validate([
-         'username'=>'required|min:8|max:16',
-         'password'=>'required|min:8|max:64',
+             'username'=>'required|min:8|max:16',
+             'password'=>'required|min:8|max:64',
         ]);
-        $count=AdminLogin::where('username',$request->username)->where('password',$request->password)->count();
-        if($count==1){
+
+        $count=AdminLogin::where('username', $request->username)->where('password', $request->password)->count();
+
+        if($count === 1){
            $request->session()->put('username', $request->username);
            $request->session()->put('password', $request->password);
            $r=$request->session()->get('username', $request->username);
@@ -26,11 +38,18 @@ class AdminLoginController extends Controller
            return view('admin.viewQuestion',['result'=>$result]);
         }
     }
-    public function logout(request $request){
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function logout(request $request)
+    {
         $request->session()->flush('password');
         $request->session()->flush('username');
         return view('admin.login');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -72,7 +91,7 @@ class AdminLoginController extends Controller
     {
         //
     }
- 
+
     /**
      * Show the form for editing the specified resource.
      *

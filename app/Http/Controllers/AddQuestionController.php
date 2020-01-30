@@ -7,9 +7,17 @@ use Illuminate\Http\Request;
 
 class AddQuestionController extends Controller
 {
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function addQuestionFrame(){
         return view('admin.addQuestion');
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function addQuestion(request $request){
            $add=new addQuestion;
            $add->question=$request->question;
@@ -24,8 +32,9 @@ class AddQuestionController extends Controller
              $add->link=$request->link;
            }
            $add->save();
-           return view('admin.success')->with('msg',"All are successfully added!");
+           return view('admin.success')->with('msg', "All are successfully added!");
     }
+
     /**
      * Display a listing of the resource.
      *
